@@ -60,7 +60,7 @@ get_download_url() {
   local version="$1"
   local arch; arch="$(get_arch)"
   local platform; platform="$(get_platform)"
-  echo "https://github.com/alajmo/mani/releases/download/v${version}/mani-${version}-${arch}-${platform}.tar.gz"
+  echo "https://github.com/alajmo/mani/releases/download/v${version}/mani_${version}_${platform}_${arch}.tar.gz"
 }
 
 install_bat "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"

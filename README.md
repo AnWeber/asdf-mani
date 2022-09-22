@@ -10,5 +10,5 @@ you can add this plugin like this:
 
 ```bash
 asdf plugin add mani https://github.com/anweber/asdf-mani.git
-asdf install mani 0.22.1
+asdf install mani 0.22.0
 `````
