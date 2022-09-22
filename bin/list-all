@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-source "./utils.bash"
-
 list_all_versions | sort_versions | xargs echo
 
 
