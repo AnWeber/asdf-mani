@@ -20,7 +20,6 @@ install_mani() {
   echo "Downloading mani from ${download_url}"
   curl -sSL "$download_url" -o "${install_path}/mani.tar.gz"
   tar xzf "${install_path}/mani.tar.gz" -C "${install_path}"
-  mv "${install_path}/mani-v${version}_$(get_platform)_$(get_arch)"/* "${install_path}"
   mv "${install_path}/mani" "${bin_path}"
   chmod +x "$bin_path"
   rm -rf "${install_path}/mani.tar.gz" "${install_path}"/mani-*
