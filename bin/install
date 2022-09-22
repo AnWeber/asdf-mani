@@ -32,6 +32,9 @@ get_arch() {
   armv7l)
     arch='arm'
     ;;
+  x86_64)
+    arch='386'
+    ;;
   esac
 
   echo "${arch}"
