@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-list_all_versions | sort_versions | xargs echo
-
-
 GH_REPO="https://github.com/alajmo/mani/"
 
 list_all_versions() {
@@ -12,3 +9,13 @@ list_all_versions() {
     grep -o 'refs/tags/.*' | cut -d/ -f3- |
     sed 's/^v//'
 }
+
+sort_versions() {
+  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' |
+    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
+}
+
+
+list_all_versions | sort_versions | xargs echo
+
+
