@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "./utils.bash"
+
+list_all_versions | sort_versions | xargs echo
+
+
+GH_REPO="https://github.com/alajmo/mani/"
+
+list_all_versions() {
+  git ls-remote --tags --refs "$GH_REPO" |
+    grep -o 'refs/tags/.*' | cut -d/ -f3- |
+    sed 's/^v//'
+}
