@@ -15,6 +15,7 @@ release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$ASDF_INSTALL_VERSION.tar.gz"
 download_release "$ASDF_INSTALL_VERSION" "$release_file"
 
 tar -xzf "$release_file" -C "$ASDF_DOWNLOAD_PATH" --strip-components=1 || fail "Could not extract $release_file"
-mkdir -p bin
-mv mani bin/mani
+bin_path="${ASDF_DOWNLOAD_PATH}/bin"
+mkdir -p $bin_path
+mv "$ASDF_DOWNLOAD_PATH"/mani "$bin_path}/mani"
 rm "$release_file"
