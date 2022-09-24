@@ -1,65 +1,10 @@
 #!/usr/bin/env bash
 
-set -e
-set -o pipefail
+set -euo pipefail
 
-ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version  }
-TMPDIR=${TMPDIR:-/tmp}
-[ -n "$ASDF_INSTALL_VERSION" ] || (>&2 echo 'Missing ASDF_INSTALL_VERSION' && exit 1)
-[ -n "$ASDF_INSTALL_PATH" ] || (>&2 echo 'Missing ASDF_INSTALL_PATH' && exit 1)
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
 
-install_mani() {
-  local version=$2
-  local install_path=$3
-  local bin_install_path="$install_path/bin"
-  local download_url; download_url="$(get_download_url "$version")"
+source "${plugin_dir}/lib/utils.bash"
 
-  mkdir -p "${bin_install_path}"
-
-  local bin_path="${bin_install_path}/mani"
-  echo "Downloading mani from ${download_url}"
-  curl -sSL "$download_url" -o "${install_path}/mani.tar.gz"
-  tar xzf "${install_path}/mani.tar.gz" -C "${install_path}"
-  mv "${install_path}/mani" "${bin_path}"
-  chmod +x "$bin_path"
-  rm -rf "${install_path}/mani.tar.gz" "${install_path}"/mani-*
-}
-
-get_arch() {
-  local arch; arch=$(uname -m | tr '[:upper:]' '[:lower:]')
-  case ${arch} in
-  armv7l)
-    arch='arm'
-    ;;
-  x86_64)
-    arch='386'
-    ;;
-  esac
-
-  echo "${arch}"
-}
-
-get_platform() {
-  local plat; plat=$(uname | tr '[:upper:]' '[:lower:]')
-  case ${plat} in
-  darwin)
-    plat='darwin'
-    ;;
-  linux)
-    plat='linux';;
-  windows)
-    plat='windows'
-    ;;
-  esac
-
-  echo "${plat}"
-}
-
-get_download_url() {
-  local version="$1"
-  local arch; arch="$(get_arch)"
-  local platform; platform="$(get_platform)"
-  echo "https://github.com/alajmo/mani/releases/download/v${version}/mani_${version}_${platform}_${arch}.tar.gz"
-}
-
-install_mani "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
+install_version "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
