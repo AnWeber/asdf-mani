@@ -29,7 +29,7 @@ list_all_versions() {
 }
 
 get_arch() {
-  local arch; arch=$(uname -m | tr '[:upper:]' '[:lower:]')
+  arch=$(uname -m | tr '[:upper:]' '[:lower:]')
   case ${arch} in
   armv7l)
     arch='arm'
@@ -43,13 +43,14 @@ get_arch() {
 }
 
 get_platform() {
-  local plat; plat=$(uname | tr '[:upper:]' '[:lower:]')
+  plat=$(uname | tr '[:upper:]' '[:lower:]')
   case ${plat} in
   darwin)
     plat='darwin'
     ;;
   linux)
-    plat='linux';;
+    plat='linux'
+    ;;
   windows)
     plat='windows'
     ;;
